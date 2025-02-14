@@ -60,6 +60,10 @@ class BaseSerializer:
     @cached_property
     def _serializer_fields(self) -> dict[str, Type[BaseField]]:
         raw_fields = {**self.__class__.__dict__}
-        fields = dict(raw_fields.items())
+        fields = {}
+
+        for name, field in raw_fields.items():
+            if isinstance(field, BaseField):
+                fields[name] = field
 
         return fields
